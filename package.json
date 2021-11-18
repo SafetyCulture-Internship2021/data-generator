@@ -1,0 +1,24 @@
+{
+  "name": "data-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SafetyCultureInterns/data-generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SafetyCultureInterns/data-generator/issues"
+  },
+  "homepage": "https://github.com/SafetyCultureInterns/data-generator#readme",
+  "dependencies": {
+    "@hapi/glue": "^8.0.0",
+    "@hapi/hapi": "^20.2.1",
+    "uuid": "^8.3.2"
+  }
+}
