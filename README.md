@@ -4,7 +4,6 @@ Data generator for backend metrics
 
 ## Getting Started
 
-- Install [nvm](https://github.com/nvm-sh/nvm)
 - Run `nvm install 16`
 - Run `npm install`
 - Run `node index.js` to start the server

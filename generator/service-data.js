@@ -5,11 +5,6 @@ const randomDecimal = (min, max) => {
     return Math.random() * (min - max) + max
 };
 
-const randomWithSpike = (min, max, chance, factor = 1.25) => {
-    const hasSpike = randomDecimal(0, 1) < chance;
-    return randomDecimal(min, max) * (hasSpike ? factor : 1)
-}
-
 const roundDecimals = (num, decimals = 2) => {
     return Math.floor(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
@@ -21,7 +16,7 @@ const jitter = (percentage = 1, ratio = 0.25) => {
     return percentage * (1 + jitterFactor)
 }
 
-const randomStatus = (config) => {
+const randomStatus = (config, hasSpike = false) => {
     const s_200 = (config["200"] || 0)
     const s_400 = (config["400"] || 0) + s_200
     const s_401 = (config["401"] || 0) + s_400
@@ -30,7 +25,8 @@ const randomStatus = (config) => {
     const s_499 = (config["499"] || 0) + s_404
     const s_500 = (config["500"] || 0) + s_499
 
-    const status = randomDecimal(0, 1);
+    // When we see a spike, quarter the ratio
+    const status = randomDecimal(hasSpike ? 0.25 : 0, 1);
 
     if (status <= s_200) {
         return "200";
@@ -80,25 +76,25 @@ const sampleServiceData = (config, users) => {
     const perPodTraffic = Math.floor(traffic / config.pod.count);
     const pods = [];
 
+    const hasSpike = randomDecimal(0, 1) <= config.spikeChance;
     for (let i = 0; i < config.pod.count; i++) {
-        const cpu = roundDecimals(randomWithSpike(config.pod.cpu.min, config.pod.cpu.max, config.pod.cpu.spikeChance));
-        const mem = Math.floor(randomWithSpike(config.pod.mem.min, config.pod.mem.max, config.pod.mem.spikeChance));
+        const cpu = roundDecimals(randomDecimal(config.pod.cpu.min, config.pod.cpu.max) * hasSpike ? 3 : 1);
+        const mem = Math.floor(randomDecimal(config.pod.mem.min, config.pod.mem.max)) * hasSpike ? 2 : 1;
 
         const status = {};
 
         const samples = [];
 
         for (let j = 0; j < perPodTraffic; j++) {
-            const stat = randomStatus(config.status);
+            const stat = randomStatus(config.status, hasSpike);
             if (!status[stat]) {
                 status[stat] = 1
             } else {
                 status[stat] += 1;
             }
             const latency = Math.floor(randomSkew(config.latency.from, config.latency.to, 2.5))
-            const hasSpike = randomDecimal(0, 1) <= config.latencySpikeChance;
 
-            samples.push(hasSpike ? latency * 2 : latency);
+            samples.push(hasSpike ? latency * 2.5 : latency);
         }
 
         pods.push({
