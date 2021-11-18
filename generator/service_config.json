@@ -16,10 +16,7 @@
     },
     "status": {
       "200": 0.5,
-      "400": 0,
       "401": 0.4,
-      "403": 0,
-      "404": 0,
       "499": 0.01,
       "500": 0.08,
       "502": 0.01
@@ -29,5 +26,60 @@
       "to": 400
     },
     "latencySpikeChance": 0.05
+  },
+  "users": {
+    "trafficRatio": 0.15,
+    "pod": {
+      "count": 8,
+      "cpu": {
+        "min": 0.1,
+        "max": 0.4,
+        "spikeChance": 0.1
+      },
+      "mem": {
+        "min": 256,
+        "max": 1024,
+        "spikeChance": 0.05
+      }
+    },
+    "status": {
+      "200": 0.7,
+      "401": 0.05,
+      "403": 0.1,
+      "404": 0.05,
+      "499": 0.0495,
+      "500": 0.001,
+      "502": 0.0495
+    },
+    "latency": {
+      "from": 20,
+      "to": 200
+    },
+    "latencySpikeChance": 0.05
+  },
+  "cart": {
+    "trafficRatio": 0.25,
+    "pod": {
+      "count": 12,
+      "cpu": {
+        "min": 0.1,
+        "max": 0.25,
+        "spikeChance": 0
+      },
+      "mem": {
+        "min": 128,
+        "max": 256,
+        "spikeChance": 0
+      }
+    },
+    "status": {
+      "200": 0.95,
+      "403": 0.05
+    },
+    "latency": {
+      "from": 100,
+      "to": 1000
+    },
+    "latencySpikeChance": 0.1
   }
 }

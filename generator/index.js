@@ -18,7 +18,7 @@ class ServiceContainer {
     }
 
     data(service, from, to) {
-        const parses = [];
+        const parses = {};
 
         for (let i = from; i < to; i++) {
             // Every 10s
@@ -28,22 +28,24 @@ class ServiceContainer {
 
                 const pods = generateServiceData(this.serviceCfg[service], traffic * this.ratio);
 
-                // Append a parse per pod
-                parses.push(...pods.map((pod) => ({
-                    ts: i,
-                    meta: {
-                        service,
-                        pod: `${service}-${pod.pod}`
-                    },
-                    http: {
-                        status: pod.status,
-                        latency: pod.latency
-                    },
-                    os: {
-                        cpu: pod.cpu,
-                        memory: pod.mem
-                    }
-                })))
+                parses[i] = pods.reduce((agg, pod) => {
+                    agg[`${service}-${pod.pod}`] = {
+                        ts: i,
+                        meta: {
+                            service,
+                            pod: `${service}-${pod.pod}`
+                        },
+                        http: {
+                            status: pod.status,
+                            latency: pod.latency
+                        },
+                        os: {
+                            cpu: pod.cpu,
+                            memory: pod.mem
+                        }
+                    };
+                    return agg;
+                }, {});
             }
         }
 

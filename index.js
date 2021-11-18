@@ -25,7 +25,6 @@ async function execute() {
         method: "GET",
         path: "/metrics/{service}",
         handler: (req, h) => {
-            console.log()
             const { service } = req.params;
             const { from, to } = req.query;
 

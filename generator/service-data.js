@@ -10,6 +10,10 @@ const randomWithSpike = (min, max, chance, factor = 2) => {
     return randomDecimal(min, max) * (hasSpike ? factor : 1)
 }
 
+const roundDecimals = (num, decimals = 2) => {
+    return Math.floor(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
+}
+
 // Apply an additional 10% jitter onto any percentages we generate
 const jitter = (percentage = 1, ratio = 0.25) => {
     const jitterFactor = randomDecimal(0, 2 * ratio) - ratio;
@@ -18,13 +22,13 @@ const jitter = (percentage = 1, ratio = 0.25) => {
 }
 
 const randomStatus = (config) => {
-    const s_200 = config["200"]
-    const s_400 = config["400"] + s_200
-    const s_401 = config["401"] + s_400
-    const s_403 = config["403"] + s_401
-    const s_404 = config["404"] + s_403
-    const s_499 = config["499"] + s_404
-    const s_500 = config["500"] + s_499
+    const s_200 = (config["200"] || 0)
+    const s_400 = (config["400"] || 0) + s_200
+    const s_401 = (config["401"] || 0) + s_400
+    const s_403 = (config["403"] || 0) + s_401
+    const s_404 = (config["404"] || 0) + s_403
+    const s_499 = (config["499"] || 0) + s_404
+    const s_500 = (config["500"] || 0) + s_499
 
     const status = randomDecimal(0, 1);
 
@@ -77,7 +81,7 @@ const sampleServiceData = (config, users) => {
     const pods = [];
 
     for (let i = 0; i < config.pod.count; i++) {
-        const cpu = Math.floor(randomWithSpike(config.pod.cpu.min, config.pod.cpu.max, config.pod.cpu.spikeChance));
+        const cpu = roundDecimals(randomWithSpike(config.pod.cpu.min, config.pod.cpu.max, config.pod.cpu.spikeChance));
         const mem = Math.floor(randomWithSpike(config.pod.mem.min, config.pod.mem.max, config.pod.mem.spikeChance));
 
         const status = {};
