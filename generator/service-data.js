@@ -5,7 +5,7 @@ const randomDecimal = (min, max) => {
     return Math.random() * (min - max) + max
 };
 
-const randomWithSpike = (min, max, chance, factor = 2) => {
+const randomWithSpike = (min, max, chance, factor = 1.25) => {
     const hasSpike = randomDecimal(0, 1) < chance;
     return randomDecimal(min, max) * (hasSpike ? factor : 1)
 }
@@ -98,7 +98,7 @@ const sampleServiceData = (config, users) => {
             const latency = Math.floor(randomSkew(config.latency.from, config.latency.to, 2.5))
             const hasSpike = randomDecimal(0, 1) <= config.latencySpikeChance;
 
-            samples.push(hasSpike ? latency * 4 : latency);
+            samples.push(hasSpike ? latency * 2 : latency);
         }
 
         pods.push({

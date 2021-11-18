@@ -81,5 +81,84 @@
       "to": 1000
     },
     "latencySpikeChance": 0.1
+  },
+  "products": {
+    "trafficRatio": 0.9,
+    "pod": {
+      "count": 32,
+      "cpu": {
+        "min": 0.3,
+        "max": 0.8,
+        "spikeChance": 0.4
+      },
+      "mem": {
+        "min": 256,
+        "max": 512,
+        "spikeChance": 0.3
+      }
+    },
+    "status": {
+      "200": 0.7,
+      "499": 0.15,
+      "500": 0,
+      "502": 0.15
+    },
+    "latency": {
+      "from": 100,
+      "to": 10000
+    },
+    "latencySpikeChance": 0.1
+  },
+  "suggestions": {
+    "trafficRatio": 0.75,
+    "pod": {
+      "count": 32,
+      "cpu": {
+        "min": 0.5,
+        "max": 1,
+        "spikeChance": 0.5
+      },
+      "mem": {
+        "min": 256,
+        "max": 512,
+        "spikeChance": 0.5
+      }
+    },
+    "status": {
+      "200": 0.8,
+      "499": 0.05,
+      "500": 0.15
+    },
+    "latency": {
+      "from": 50,
+      "to": 200
+    },
+    "latencySpikeChance": 0.4
+  },
+  "billing": {
+    "trafficRatio": 0.2,
+    "pod": {
+      "count": 10,
+      "cpu": {
+        "min": 0.05,
+        "max": 0.01,
+        "spikeChance": 0.001
+      },
+      "mem": {
+        "min": 400,
+        "max": 512,
+        "spikeChance": 0.05
+      }
+    },
+    "status": {
+      "200": 0.65,
+      "400": 0.3,
+      "500": 0.05
+    },
+    "latency": {
+      "from": 500,
+      "to": 2000
+    },
+    "latencySpikeChance": 0.8
   }
 }
