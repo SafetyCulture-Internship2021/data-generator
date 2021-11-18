@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/SafetyCultureInterns/data-generator/issues"
   },
-  "homepage": "https://github.com/SafetyCultureInterns/data-generator#readme"
+  "homepage": "https://github.com/SafetyCultureInterns/data-generator#readme",
+  "dependencies": {
+    "@hapi/glue": "^8.0.0",
+    "@hapi/hapi": "^20.2.1",
+    "uuid": "^8.3.2"
+  }
 }
