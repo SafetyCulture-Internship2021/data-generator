@@ -7,7 +7,7 @@ async function execute() {
 
     const svc = await compose({
         server: {
-            port: 4000,
+            port: process.env.PORT || 4000,
         }
     }, {
         relativeTo: __dirname
@@ -17,7 +17,10 @@ async function execute() {
         method: "GET",
         path: "/services",
         handler: (req, h) => {
-            return serviceContainer.services();
+            const services = serviceContainer.services();
+            console.log(services)
+            return services
+
         }
     })
 
