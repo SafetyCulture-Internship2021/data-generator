@@ -7,6 +7,7 @@ async function execute() {
 
     const svc = await compose({
         server: {
+            port: 4000,
             port: process.env.PORT || 4000,
         }
     }, {
